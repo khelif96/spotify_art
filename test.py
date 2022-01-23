@@ -18,9 +18,11 @@ track = sp.current_user_playing_track()
 
 url = track["item"]["album"]["images"][0]["url"]
 song = track["item"]["album"]["name"]
-artist = track["item"]["artists"][0]["name"]
+artists = ""
+for artist in track["item"]["artists"]:
+    artists += artist["name"] + " "
 uri = track["item"]["uri"]
-print(artist)
+print(artists)
 print(song)
 print(uri)
 
@@ -28,20 +30,21 @@ if url == None:
     print("No image found")
 response = requests.get(url)
 
-file = open("track.png", "wb")
+file = open("out/track.png", "wb")
 file.write(response.content)
 file.close()
 
-convert_image.transformAll()
-
+color = convert_image.getAverageColor("out/track.png")
 spotifycode.getSpotifyCode(uri)
 
-convert_image.attachSpotifyCode("track.png", "code.png")
-
-# color = convert_image.getAverageColor("track.png")
-convert_image.wordFilter("track.png", artist + " ", color=(0,0,0))
-
-convert_image.combineImages()
-
+convert_image.wordFilter("out/track.png", artists,  background=color)
+convert_image.grayscale("out/track.png")
+convert_image.blur("out/track.png", radius=10)
+convert_image.pixelate("out/track.png", size=3)
+convert_image.invert("out/track.png")
+convert_image.mirror("out/track.png" )
+convert_image.circleCropped("out/track.png")
+convert_image.combineImages(["track.png", "track_blurred.png", "track_pixelated.png","track_word.png" ], output="track_combined.png", path="out/", background=color)
+# convert_image.attachSpotifyCode("track_combined.png", "code.png", color=color)
 
 # convert_image.getAverageColor("track.png")
