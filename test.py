@@ -38,11 +38,10 @@ spotifycode.getSpotifyCode(uri)
 
 convert_image.attachSpotifyCode("track.png", "code.png")
 
-color = convert_image.getAverageColor("track.png")
-convert_image.wordFilter("track.png", artist + " ", color)
+# color = convert_image.getAverageColor("track.png")
+convert_image.wordFilter("track.png", artist + " ", color=(0,0,0))
 
 convert_image.combineImages()
 
-convert_image.circle("track.png")
 
-convert_image.getAverageColor("track.png")
+# convert_image.getAverageColor("track.png")

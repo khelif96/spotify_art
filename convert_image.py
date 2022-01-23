@@ -47,7 +47,7 @@ def attachSpotifyCode(im, code):
 
 def wordFilter(im, phrase, color = (255,255,255)):
     im = Image.open(im).convert('RGBA')
-    textOverlay = Image.new('RGBA', im.size, (*color,0))
+    textOverlay = Image.new('RGBA', im.size, (*color,255))
     font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 20)
     draw = ImageDraw.Draw(textOverlay)
     xPos = 0
